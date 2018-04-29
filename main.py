@@ -5,7 +5,10 @@ RANK, SUIT = 0, 1
 def GetPoint(hand):
     result = 0
     for card in hand:
-        num = card[RANK]
+        if card[RANK] > 10:
+            num = 10
+        else:
+            num = card[RANK]
         result += num
     return result
 
