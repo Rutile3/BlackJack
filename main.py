@@ -56,14 +56,45 @@ def main():
         player_hand = []
         dealer_hand = []
         deck = MakeDeck()
+
+        #ベット額の選択
+        bet = 10#本来プレーヤーに入力させるがデバッグ用に端折って
+        player_money -= bet;
+
+        #お互いに2枚ずつ引く
         for i in range(2):
             player_hand.append(deck.pop())
             dealer_hand.append(deck.pop())
         PrintPlayerHand(player_hand)
         PrintDealerHand(dealer_hand, False)
-        #ベット額の選択
-        #お互いにカードを二枚づつ引く
+
         #プレーヤーのターン
+        while True:
+            op = input('スタント : 1, ヒット : 2, ダブル: 3 > ')
+            if op == '1':
+                print('スタンド')
+                break
+            elif op == '2':
+                print('ヒット')
+                player_hand.append(deck.pop())
+                PrintPlayerHand(player_hand)
+            elif op == '3':
+                if len(player_hand) == 2:
+                    print('ダブル')
+                    player_hand.append(deck.pop())
+                    PrintPlayerHand(player_hand)
+                    player_money -= bet
+                    bet += bet
+                else:
+                    print('ダブルはできません')
+            else:
+                print('無効な入力です')
+                continue
+                
+            if GetPoint(player_hand) > 21:
+                print('プレーヤーはバーストした!')
+                break
+
         #ディーラーのターン
         #手札表示
         #勝敗判定
