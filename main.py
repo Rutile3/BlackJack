@@ -47,6 +47,16 @@ def PrintPlayerHand(player_hand):
         print('[', card[SUIT], card[RANK], ']')
     print()#改行用
 
+def DealerTurn(deck, player_hand, dealer_hand):
+    while GetPoint(player_hand) <= 21:
+        if GetPoint(dealer_hand) >= 17:
+            print('ディーラー：スタンド\n')
+            break
+        else:
+            print('ディーラー：ヒット')
+            dealer_hand.append(deck.pop())
+        PrintDealerHand(dealer_hand, False)
+        
 def PlayerTurn(deck, player_hand, op):
     doubled, ending = False, False
     if op == '1':
@@ -105,18 +115,12 @@ def main():
                 break;
 
         #ディーラーのターン
-        while GetPoint(player_hand) <= 21:
-            if GetPoint(dealer_hand) >= 17:
-                print('ディーラー：スタンド\n')
-                break
-            else:
-                print('ディーラー：ヒット')
-                dealer_hand.append(deck.pop())
-            PrintDealerHand(dealer_hand, True)
-                
+        DealerTurn(deck, player_hand, dealer_hand)      
 
         #手札表示
+
         #勝敗判定
+
         break #デバッグ用のループ抜け出し
     #gameover
 
