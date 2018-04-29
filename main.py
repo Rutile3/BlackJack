@@ -56,7 +56,7 @@ def DealerTurn(deck, player_hand, dealer_hand):
             print('ディーラー：ヒット')
             dealer_hand.append(deck.pop())
         PrintDealerHand(dealer_hand, False)
-        
+      
 def PlayerTurn(deck, player_hand, op):
     doubled, ending = False, False
     if op == '1':
@@ -72,7 +72,7 @@ def PlayerTurn(deck, player_hand, op):
             print('プレーヤー：ダブル')
             player_hand.append(deck.pop())
             PrintPlayerHand(player_hand)
-            doubled, ending = True, False
+            doubled, ending = True, True
         else:
             print('ダブルはできません')
     
@@ -85,6 +85,21 @@ def PlayerTurn(deck, player_hand, op):
 
     return doubled, ending
     
+def WinLose(dealer_hand, player_hand, bet, player_money):
+    player_point = GetPoint(player_hand)
+    dealer_point = GetPoint(dealer_hand)
+    if player_point > 21:
+        return 'プレーヤーの負け', player_money
+    #この時点でディーラーがバーストしたらプレーヤーの勝ちが確定する
+    if (player_point > dealer_point) or (dealer_point) > 21:
+        if  player_point == 21:
+            return 'プレーヤーの勝ち', player_money + int(bet * 2.5)
+        else:
+            return 'プレーヤーの勝ち', player_money + bet * 2
+    elif player_point == dealer_point:
+            return 'プッシュ', player_money + bet
+    else:
+        return 'プレーヤーの負け', player_money 
 
 def main():
     player_money = 100 #とりあえずこの値で
@@ -107,6 +122,7 @@ def main():
         if bet <= 0:
             print('ベットできる額は1以上です')
             continue
+        player_money -= bet
 
         #お互いに2枚ずつ引く
         if len(deck) < 10:
@@ -128,14 +144,18 @@ def main():
                 break;
 
         #ディーラーのターン
-        DealerTurn(deck, player_hand, dealer_hand)      
+        DealerTurn(deck, player_hand, dealer_hand)
 
         #手札表示
+        PrintPlayerHand(player_hand)
+        PrintDealerHand(dealer_hand, True)
 
         #勝敗判定
+        message, player_money = WinLose(dealer_hand, player_hand, bet, player_money)
+        print(message)
 
-        break #デバッグ用のループ抜け出し
-    #gameover
+    print('所持金：' + str(player_money))
+    print('GameOver')
 
 if __name__ == '__main__': #直接実行されたときのみ実行
     main()
