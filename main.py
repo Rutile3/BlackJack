@@ -29,6 +29,21 @@ def MakeDeck():
 
     return deck
 
+def PrintDealerHand(dealer_hand, show_all):
+    if show_all:
+        print('ディーラー(', GetPoint(dealer_hand), ')')
+    else:
+        print('ディーラー(', '##', ')')
+
+    show_one = True
+    for card in dealer_hand:
+        if show_one or show_all:#ポーカー用語とは関係ない
+            print('[', card[SUIT], card[RANK], ']')
+            show_one = False    #1枚目のみ公開の場合はこれで2以降は非公開になうようにする
+        else:
+            print('[', '# #', ']');
+    print()#改行用
+    
 def PrintPlayerHand(player_hand):
     print('プレーヤー(', GetPoint(player_hand), ')')
     for card in player_hand:
@@ -41,11 +56,11 @@ def main():
         player_hand = []
         dealer_hand = []
         deck = MakeDeck()
-        for i in range(3):
+        for i in range(2):
             player_hand.append(deck.pop())
             dealer_hand.append(deck.pop())
         PrintPlayerHand(player_hand)
-        PrintPlayerHand(dealer_hand)
+        PrintDealerHand(dealer_hand, False)
         #ベット額の選択
         #お互いにカードを二枚づつ引く
         #プレーヤーのターン
