@@ -39,7 +39,7 @@ def PrintDealerHand(dealer_hand, show_all):
     for card in dealer_hand:
         if show_one or show_all:#ポーカー用語とは関係ない
             print('[', card[SUIT], card[RANK], ']')
-            show_one = False    #1枚目のみ公開の場合はこれで2以降は非公開になうようにする
+            show_one = False    #1枚目のみ表示の場合はこれで2以降は表示になうようにする
         else:
             print('[', '# #', ']');
     print()#改行用
@@ -65,7 +65,7 @@ def main():
         #お互いにカードを二枚づつ引く
         #プレーヤーのターン
         #ディーラーのターン
-        #手札公開
+        #手札表示
         #勝敗判定
         break #デバッグ用のループ抜け出し
     #gameover
