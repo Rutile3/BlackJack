@@ -4,12 +4,21 @@ RANK, SUIT = 0, 1
 
 def GetPoint(hand):
     result = 0
+    have_ace = False        #この変数名どうやろ？
+
     for card in hand:
-        if card[RANK] > 10:
+        if card[RANK] == 1:
+            if have_ace == True:
+                input()
+            have_ace = True
+        if card[RANK] > 10: #絵札
             num = 10
         else:
-            num = card[RANK]
+            num = card[RANK]#1とここで1として加算する
         result += num
+    if have_ace and result <=11:
+        result += 10        #本来Aは11か1として扱うが既に1加算しているので10加算している
+
     return result
 
 def MakeDeck():
@@ -17,6 +26,7 @@ def MakeDeck():
     ranks = range(1, 13+1)
     deck = [(r, s) for r in ranks for s in suits]
     random.shuffle(deck)
+
     return deck
 
 def main():
@@ -25,7 +35,7 @@ def main():
         player_hand = []
         dealer_hand = []
         deck = MakeDeck()
-        for i in range(2):
+        for i in range(3):
             player_hand.append(deck.pop())
             dealer_hand.append(deck.pop())
         #ベット額の選択
