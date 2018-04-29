@@ -50,6 +50,35 @@ def PrintPlayerHand(player_hand):
         print('[', card[SUIT], card[RANK], ']')
     print()#改行用
 
+def PlayerTurn(deck, player_hand, op):
+    doubled, ending = False, False
+    if op == '1':
+        print('プレーヤー：スタンド')
+        doubled, ending = False, True
+    elif op == '2':
+        print('プレーヤー：ヒット')
+        player_hand.append(deck.pop())
+        PrintPlayerHand(player_hand)
+        doubled, ending = False, False
+    elif op == '3':
+        if len(player_hand) == 2:
+            print('プレーヤー：ダブル')
+            player_hand.append(deck.pop())
+            PrintPlayerHand(player_hand)
+            doubled, ending = True, False
+        else:
+            print('ダブルはできません')
+    
+    if GetPoint(player_hand) > 21:
+        print('プレーヤーはバーストした!')
+        ending = True
+    elif GetPoint(player_hand) == 21:
+        print('ブラックジャック!')
+        ending = True
+
+    return doubled, ending
+    
+
 def main():
     player_money = 100 #とりあえずこの値で
     while player_money > 0:
@@ -70,30 +99,13 @@ def main():
 
         #プレーヤーのターン
         while True:
-            op = input('スタント : 1, ヒット : 2, ダブル: 3 > ')
-            if op == '1':
-                print('スタンド')
-                break
-            elif op == '2':
-                print('ヒット')
-                player_hand.append(deck.pop())
-                PrintPlayerHand(player_hand)
-            elif op == '3':
-                if len(player_hand) == 2:
-                    print('ダブル')
-                    player_hand.append(deck.pop())
-                    PrintPlayerHand(player_hand)
-                    player_money -= bet
-                    bet += bet
-                else:
-                    print('ダブルはできません')
-            else:
-                print('無効な入力です')
-                continue
-                
-            if GetPoint(player_hand) > 21:
-                print('プレーヤーはバーストした!')
-                break
+            op = input('スタント：1, ヒット： 2, ダブル：3 > ')
+            doubled, ending = PlayerTurn(deck, player_hand, op)
+            if doubled:
+                player_money -= bet
+                bet += bet
+            if ending:
+                break;
 
         #ディーラーのターン
         #手札表示
