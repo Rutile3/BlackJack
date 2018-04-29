@@ -10,22 +10,20 @@ def make_deck():
     return deck
 
 def main():
-    player_money = 100 #あと書き直す
+    player_money = 100 #とりあえずこの値で
     while player_money > 0:
         player_hand = []
         dealer_hand = []
         deck = make_deck()
-        player_hand.append(deck.pop())
-        player_hand.append(deck.pop())
-        dealer_hand.append(deck.pop())
-        dealer_hand.append(deck.pop())
-        print(player_hand)
-        print(dealer_hand)
+        for i in range(2):
+            player_hand.append(deck.pop())
+            dealer_hand.append(deck.pop())
         #ベット額の選択
         #お互いにカードを二枚づつ引く
         #プレーヤーのターン
         #ディーラーのターン
-        #手札公開
+        print(player_hand)
+        print(dealer_hand)
         #勝敗判定
         break # でバック用のループ抜け出し
     #gameover
