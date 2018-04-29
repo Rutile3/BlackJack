@@ -38,7 +38,7 @@ def PrintDealerHand(dealer_hand, show_all):
             print('[', card[SUIT], card[RANK], ']')
             show_one = False    #1枚目のみ表示の場合はこれで2以降は表示になうようにする
         else:
-            print('[', '# #', ']');
+            print('[', '# #', ']')
     print()#改行用
     
 def PrintPlayerHand(player_hand):
@@ -102,13 +102,17 @@ def WinLose(dealer_hand, player_hand, bet, player_money):
         return 'プレーヤーの負け', player_money 
 
 def main():
+    turn = 1
     player_money = 100 #とりあえずこの値で
     deck = MakeDeck()
 
     while player_money > 0:
         player_hand = []
         dealer_hand = []
+        print('-'*20)
+        print('ターン：' + str(turn))
         print('所持金：' + str(player_money))
+        print('-'*20)
 
         #ベット額の選択
         try:
@@ -130,8 +134,10 @@ def main():
         for i in range(2):
             player_hand.append(deck.pop())
             dealer_hand.append(deck.pop())
+        print('-'*20)
         PrintPlayerHand(player_hand)
         PrintDealerHand(dealer_hand, False)
+        print('-'*20)
 
         #プレーヤーのターン
         while True:
@@ -141,18 +147,21 @@ def main():
                 player_money -= bet
                 bet *= 2
             if ending:
-                break;
+                break
 
         #ディーラーのターン
         DealerTurn(deck, player_hand, dealer_hand)
 
         #手札表示
+        print('-'*20)
         PrintPlayerHand(player_hand)
         PrintDealerHand(dealer_hand, True)
+        print('-'*20)
 
         #勝敗判定
         message, player_money = WinLose(dealer_hand, player_hand, bet, player_money)
         print(message)
+        turn += 1
 
     print('所持金：' + str(player_money))
     print('GameOver')
