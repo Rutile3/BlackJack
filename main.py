@@ -8,8 +8,6 @@ def GetPoint(hand):
 
     for card in hand:
         if card[RANK] == 1:
-            if have_ace == True:
-                input()
             have_ace = True
         if card[RANK] > 10: #絵札
             num = 10
@@ -26,7 +24,6 @@ def MakeDeck():
     ranks = range(1, 13+1)
     deck = [(r, s) for r in ranks for s in suits]
     random.shuffle(deck)
-
     return deck
 
 def PrintDealerHand(dealer_hand, show_all):
@@ -53,7 +50,7 @@ def PrintPlayerHand(player_hand):
 def PlayerTurn(deck, player_hand, op):
     doubled, ending = False, False
     if op == '1':
-        print('プレーヤー：スタンド')
+        print('プレーヤー：スタンド\n')
         doubled, ending = False, True
     elif op == '2':
         print('プレーヤー：ヒット')
@@ -87,7 +84,7 @@ def main():
         deck = MakeDeck()
 
         #ベット額の選択
-        bet = 10#本来プレーヤーに入力させるがデバッグ用に端折って
+        bet = 10#本来プレーヤーに入力させる？がデバッグ用に端折って
         player_money -= bet;
 
         #お互いに2枚ずつ引く
@@ -108,6 +105,16 @@ def main():
                 break;
 
         #ディーラーのターン
+        while GetPoint(player_hand) <= 21:
+            if GetPoint(dealer_hand) >= 17:
+                print('ディーラー：スタンド\n')
+                break
+            else:
+                print('ディーラー：ヒット')
+                dealer_hand.append(deck.pop())
+            PrintDealerHand(dealer_hand, True)
+                
+
         #手札表示
         #勝敗判定
         break #デバッグ用のループ抜け出し
