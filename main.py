@@ -29,6 +29,12 @@ def MakeDeck():
 
     return deck
 
+def PrintPlayerHand(player_hand):
+    print('プレーヤー(', GetPoint(player_hand), ')')
+    for card in player_hand:
+        print('[', card[SUIT], card[RANK], ']')
+    print()#改行用
+
 def main():
     player_money = 100 #とりあえずこの値で
     while player_money > 0:
@@ -38,14 +44,13 @@ def main():
         for i in range(3):
             player_hand.append(deck.pop())
             dealer_hand.append(deck.pop())
+        PrintPlayerHand(player_hand)
+        PrintPlayerHand(dealer_hand)
         #ベット額の選択
         #お互いにカードを二枚づつ引く
         #プレーヤーのターン
         #ディーラーのターン
-        print(player_hand)
-        print(GetPoint(player_hand))
-        print(dealer_hand)
-        print(GetPoint(dealer_hand))
+        #手札公開
         #勝敗判定
         break #デバッグ用のループ抜け出し
     #gameover
