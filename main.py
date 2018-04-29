@@ -88,10 +88,11 @@ def PlayerTurn(deck, player_hand, op):
 
 def main():
     player_money = 100 #とりあえずこの値で
+    deck = MakeDeck()
+
     while player_money > 0:
         player_hand = []
         dealer_hand = []
-        deck = MakeDeck()
         print('所持金：' + str(player_money))
 
         #ベット額の選択
@@ -108,6 +109,8 @@ def main():
             continue
 
         #お互いに2枚ずつ引く
+        if len(deck) < 10:
+            deck = MakeDeck()
         for i in range(2):
             player_hand.append(deck.pop())
             dealer_hand.append(deck.pop())
