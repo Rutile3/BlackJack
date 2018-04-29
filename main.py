@@ -92,8 +92,21 @@ def main():
         player_hand = []
         dealer_hand = []
         deck = MakeDeck()
+        print('所持金：' + str(player_money))
 
         #ベット額の選択
+        try:
+            bet = int(input('ベット額 > '))
+        except:
+            print('整数で入力してください')
+            continue
+        if bet > player_money:
+            print('所持金が不足しています')
+            continue
+        if bet <= 0:
+            print('ベットできる額は1以上です')
+            continue
+
         bet = 10#本来プレーヤーに入力させる？がデバッグ用に端折って
         player_money -= bet;
 
@@ -110,7 +123,7 @@ def main():
             doubled, ending = PlayerTurn(deck, player_hand, op)
             if doubled:
                 player_money -= bet
-                bet += bet
+                bet *= 2
             if ending:
                 break;
 
