@@ -107,9 +107,6 @@ def main():
             print('ベットできる額は1以上です')
             continue
 
-        bet = 10#本来プレーヤーに入力させる？がデバッグ用に端折って
-        player_money -= bet;
-
         #お互いに2枚ずつ引く
         for i in range(2):
             player_hand.append(deck.pop())
