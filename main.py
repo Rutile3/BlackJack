@@ -1,11 +1,18 @@
 import random
 
-#変数宣言
-#関数定義
-def make_deck():
+RANK, SUIT = 0, 1
+
+def GetPoint(hand):
+    result = 0
+    for card in hand:
+        num = card[RANK]
+        result += num
+    return result
+
+def MakeDeck():
     suits = ['S', 'H', 'D', 'C']
     ranks = range(1, 13+1)
-    deck = [(x, y) for x in ranks for y in suits]
+    deck = [(r, s) for r in ranks for s in suits]
     random.shuffle(deck)
     return deck
 
@@ -14,7 +21,7 @@ def main():
     while player_money > 0:
         player_hand = []
         dealer_hand = []
-        deck = make_deck()
+        deck = MakeDeck()
         for i in range(2):
             player_hand.append(deck.pop())
             dealer_hand.append(deck.pop())
@@ -23,9 +30,11 @@ def main():
         #プレーヤーのターン
         #ディーラーのターン
         print(player_hand)
+        print(GetPoint(player_hand))
         print(dealer_hand)
+        print(GetPoint(dealer_hand))
         #勝敗判定
-        break # でバック用のループ抜け出し
+        break #デバッグ用のループ抜け出し
     #gameover
 
 if __name__ == '__main__': #直接実行されたときのみ実行
